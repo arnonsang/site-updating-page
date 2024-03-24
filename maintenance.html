@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Updating</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            text-align: center;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-weight: 500;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 16px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 24px;
+        }
+
+        .progress-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .progress-bar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 4px solid #4285f4;
+            border-top-color: transparent;
+            animation: spin 1s infinite linear;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .countdown {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .button-container {
+            margin-top: 24px;
+        }
+
+        .contact-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #4285f4;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-button:hover {
+            background-color: #3367d6;
+        }
+
+        .maintenance-id {
+            font-size: 14px;
+            color: #999;
+            margin-top: 12px;
+        }
+
+        /* Add hover effect to the maintenance ID */
+        .maintenance-id span:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .last-check {
+            font-size: 10px;
+            color: #999;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Website Updating</h1>
+        <p>We're currently updating our website <a href="#" id="hostname"></a>.
+            <br>Please wait a few minutes while we update to the latest version.
+            <br>Sorry for the inconvenience, please check back later.
+        </p>
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+        <div>
+            <p>We'll be back in:</p>
+            <p class="countdown" id="countdown"></p>
+        </div>
+        <div class="button-container">
+            <a href="mailto:admin@website.com" class="contact-button">Contact Us</a>
+        </div><br>
+        <div>
+            <p>Maintenance ID: <span id="uuidDisplay"></span></p>
+        </div>
+        <!-- Last check time -->
+        <div>
+            <p id="last-check">Last checked: <span id="lastCheckTime"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // Function to check if the current page content matches the maintenance page content
+        let maintenanceUUID;
+        const recheckTime = 30000; // 30 seconds
+
+        const redirectIn = (seconds) => {
+            const redirectInterval = setInterval(() => {
+                console.log(`Redirecting to the updated website in ${seconds} seconds...`);
+                seconds--;
+                if (seconds < 0) {
+                    clearInterval(redirectInterval);
+                    window.location.reload();
+                }
+            }, seconds * 1000);
+        }
+
+        function checkMaintenancePage() {
+            var xhr = new XMLHttpRequest();
+            console.log("Checking the website state...")
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var responseText = xhr.responseText;
+                    console.log()
+                    if (maintenanceUUID === undefined) {
+                        maintenanceUUID = localStorage.getItem('maintenanceUUID');
+                    }
+                    if (responseText.includes("Website Updating")) {
+                        //get the countdown time
+                        var countdown = document.getElementById('countdown').textContent;
+                        var countdownArr = countdown.split(':');
+                        var minutes = parseInt(countdownArr[0]);
+                        var seconds = parseInt(countdownArr[1]);
+                        var totalSeconds = (minutes * 60) + seconds;
+                        console.log("\n\n");
+                        console.log("--------------------------------------------------------------------------------");
+                        console.log("Website is still updating. Time remaining: " + totalSeconds + " seconds");
+                        console.log(`Checking again in ${recheckTime / 1000} seconds...`);
+                        console.log(`Maintenance UUID: %c${maintenanceUUID}`, "color: blue");
+                        console.log("--------------------------------------------------------------------------------");
+                        console.log("\n\n")
+                        // Check if the countdown time is up
+                        if (totalSeconds <= 0) {
+                            redirectIn(1);
+                        } else {
+                            console.log(`Checking again in ${recheckTime / 1000} seconds...`);
+                        }
+                    } else {
+                        // Redirect to the updated website
+                        console.log("Website has been updated. Redirecting to the updated website...");
+                        redirectIn(3);
+                    }
+                }
+            };
+            xhr.open("GET", `${window.location.href}`, true);
+            xhr.send();
+        }
+
+        // Get the current hostname
+        var hostname = window.location.hostname;
+        document.getElementById('hostname').textContent = hostname;
+        document.getElementById('hostname').href = 'https://' + hostname;
+        document.querySelector('.contact-button').href = 'mailto:admin@' + hostname;
+        document.getElementById('uuidDisplay').textContent = maintenanceUUID;
+
+
+        // Generate and display a UUID
+        function generateUUID() {
+            var dt = new Date().getTime();
+            var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = (dt + Math.random() * 16) % 16 | 0;
+                dt = Math.floor(dt / 16);
+                return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+            });
+            return uuid;
+        }
+
+        // Generate a new UUID and save it in localStorage if it doesn't exist
+        maintenanceUUID = localStorage.getItem('maintenanceUUID');
+        if (!maintenanceUUID) {
+            maintenanceUUID = generateUUID();
+            localStorage.setItem('maintenanceUUID', maintenanceUUID);
+        }
+        document.getElementById('uuidDisplay').textContent = maintenanceUUID;
+
+        // Check if the page is still in maintenance mode every 15 seconds
+        const tryToCheck = () => {
+            try {
+                checkMaintenancePage();
+                const lastCheckTime = new Date().toLocaleTimeString({
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                document.getElementById('lastCheckTime').textContent = lastCheckTime;
+            } catch (error) {
+                //get the countdown time
+                var countdown = document.getElementById('countdown').textContent;
+                var countdownArr = countdown.split(':');
+                var minutes = parseInt(countdownArr[0]);
+                var seconds = parseInt(countdownArr[1]);
+                var totalSeconds = (minutes * 60) + seconds;
+
+                console.log("%cCan't checking the website state. Time remaining: " + totalSeconds + " seconds", "color: red");
+                console.log("Checking again in 15 seconds...");
+                console.log(`Maintenance UUID: %c${maintenanceUUID}`, "color: blue");
+                console.log("--------------------------------------------------------------------------------");
+
+                // Check if the countdown time is up
+                if (countdown && totalSeconds <= 0) {
+                    redirectIn(1);
+                }
+            }
+        };
+        const checkingInterval = setInterval(() => {
+            let checkAgainInTime = recheckTime / 1000;
+            const checkAgainIn = setInterval(() => {
+                console.log(`Checking again in ${checkAgainInTime} seconds...`);
+                checkAgainInTime--;
+                if (checkAgainInTime < 0) {
+                    clearInterval(checkAgainIn);
+                    tryToCheck();
+                }
+            }, 1000);
+        }, recheckTime);
+
+        // Set the initial countdown time in seconds
+        let countdownTime = 300; // 5 minutes = 300 seconds
+
+        // Update the countdown display every second
+        const countdownInterval = setInterval(() => {
+            const minutes = Math.floor(countdownTime / 60);
+            const seconds = countdownTime % 60;
+            const countdownDisplay = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('countdown').textContent = countdownDisplay;
+
+            // Decrement the countdown time
+            countdownTime--;
+
+            // Stop the countdown when it reaches zero
+            if (countdownTime < 0) {
+                clearInterval(countdownInterval);
+                // Optionally, you can reload the page or redirect to the updated website
+                redirectIn(3);
+            }
+        }, 1000);
+
+        tryToCheck();
+    </script>
+</body>
+
+</html>
