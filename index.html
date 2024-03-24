@@ -111,6 +111,23 @@
             margin-top: 12px;
         }
 
+        .maintenance-id span {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .maintenance-id a {
+            color: var(--dark-super-light-color);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .maintenance-id a:hover {
+            cursor: pointer;
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
         .maintenance-id span:hover {
             cursor: pointer;
             color: var(--primary-color);
@@ -145,9 +162,11 @@
         <div>
             <p class="maintenance-id">Maintenance ID: <span id="uuidDisplay"></span></p>
         </div>
-        <!-- Last check time -->
         <div>
             <p id="last-check">Last checked: <span id="lastCheckTime"></span></p>
+        </div>
+        <div>
+            <p class="maintenance-id">&copy; 2024 <a href="#" target="_blank">JLR Lab</a>. All rights reserved.</p>
         </div>
     </div>
 
