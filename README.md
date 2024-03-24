@@ -87,7 +87,7 @@ If you have suggestions for improvements or would like to contribute to enhancin
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE) - see the LICENSE file for details.
+This project is licensed under the [MIT License](LICENSE)
 
 ## Acknowledgments
 
