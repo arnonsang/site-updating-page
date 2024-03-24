@@ -82,7 +82,7 @@ In summary, this webpage informs visitors that the website is under maintenance 
 
 ## Customization
 
-Feel free to customize the content of `maintenance.html` to suit your organization's branding and communication style. You can modify the text, add your logo, or include any other relevant information to keep visitors informed and engaged during the maintenance period.
+Feel free to customize the content of `index.html` to suit your organization's branding and communication style. You can modify the text, add your logo, or include any other relevant information to keep visitors informed and engaged during the maintenance period.
 
 ## Contributing
 
