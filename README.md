@@ -1,3 +1,10 @@
+
+# Website Under Maintenance
+
+This repository contains the HTML page that will be displayed while our website is undergoing maintenance or updates, along with the Docker configuration to run the maintenance page using Nginx in a Docker container.
+
+---
+
 # Table of Contents
 1. [Website Under Maintenance](#website-under-maintenance)
 2. [Overview](#overview)
@@ -13,10 +20,6 @@
 8. [Acknowledgments](#acknowledgments)
 
 ---
-
-# Website Under Maintenance
-
-This repository contains the HTML page that will be displayed while our website is undergoing maintenance or updates, along with the Docker configuration to run the maintenance page using Nginx in a Docker container.
 
 ## Overview
 
@@ -62,12 +65,12 @@ In summary, this webpage informs visitors that the website is under maintenance 
 
 2. Clone this repository to your local machine:
     ```
-    git clone <repository-url>
+    git clone https://github.com/arnonsang/site-updating-page.git
     ```
 
 3. Navigate to the root directory of the cloned repository:
     ```
-    cd <repository-directory>
+    cd site-updating-page
     ```
 
 4. Run the docker container with docker compose:
