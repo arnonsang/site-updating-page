@@ -96,9 +96,9 @@
             margin-top: 12px;
         }
 
-        /* Add hover effect to the maintenance ID */
         .maintenance-id span:hover {
             cursor: pointer;
+            color: #4285f4;
             text-decoration: underline;
         }
 
@@ -128,7 +128,7 @@
             <a href="mailto:admin@website.com" class="contact-button">Contact Us</a>
         </div><br>
         <div>
-            <p>Maintenance ID: <span id="uuidDisplay"></span></p>
+            <p class="maintenance-id">Maintenance ID: <span id="uuidDisplay"></span></p>
         </div>
         <!-- Last check time -->
         <div>
@@ -143,7 +143,7 @@
 
         const redirectIn = (seconds) => {
             const redirectInterval = setInterval(() => {
-                console.log(`Redirecting to the updated website in ${seconds} seconds...`);
+                console.log(`Redirecting to the updated website in %c${seconds} seconds...`, "color: green; font-weight: bold;");
                 seconds--;
                 if (seconds < 0) {
                     clearInterval(redirectInterval);
@@ -173,15 +173,10 @@
                         console.log("--------------------------------------------------------------------------------");
                         console.log("Website is still updating. Time remaining: " + totalSeconds + " seconds");
                         console.log(`Checking again in ${recheckTime / 1000} seconds...`);
-                        console.log(`Maintenance UUID: %c${maintenanceUUID}`, "color: blue");
+                        console.log(`Maintenance UUID: %c${maintenanceUUID}`, "color: blue; font-weight: bold;");
                         console.log("--------------------------------------------------------------------------------");
                         console.log("\n\n")
-                        // Check if the countdown time is up
-                        if (totalSeconds <= 0) {
-                            redirectIn(1);
-                        } else {
-                            console.log(`Checking again in ${recheckTime / 1000} seconds...`);
-                        }
+
                     } else {
                         // Redirect to the updated website
                         console.log("Website has been updated. Redirecting to the updated website...");
@@ -196,10 +191,49 @@
         // Get the current hostname
         var hostname = window.location.hostname;
         document.getElementById('hostname').textContent = hostname;
-        document.getElementById('hostname').href = 'https://' + hostname;
+        document.getElementById('hostname').href = window.location.href;
         document.querySelector('.contact-button').href = 'mailto:admin@' + hostname;
+        document.querySelector('.contact-button').title = 'admin@' + hostname;
         document.getElementById('uuidDisplay').textContent = maintenanceUUID;
+        document.getElementById('uuidDisplay').title = "Click to copy the Maintenance ID for support reference.";
 
+        // Copy the Maintenance ID to the clipboard when clicked
+        document.getElementById('uuidDisplay').addEventListener('click', function () {
+            
+            //firefox doesn't support the clipboard API
+            if (!navigator.clipboard) {
+                var textArea = document.createElement("textarea");
+                textArea.value = maintenanceUUID;
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                document.execCommand('copy');
+                textArea.remove();
+                console.log(`Maintenance UUID copied to clipboard: %c${maintenanceUUID}`, "color: green");
+            }else{
+                navigator.clipboard.writeText(maintenanceUUID);
+                console.log(`Maintenance UUID copied to clipboard: %c${maintenanceUUID}`, "color: green");
+            }
+
+            // Show a tooltip message
+            const tooltip = document.createElement('div');
+            tooltip.textContent = 'Copied!';
+            tooltip.style.position = 'absolute';
+            tooltip.style.top = '50%';
+            tooltip.style.left = '50%';
+            tooltip.style.transform = 'translate(-50%, -50%)';
+            tooltip.style.padding = '8px 16px';
+            tooltip.style.backgroundColor = '#333';
+            tooltip.style.color = '#fff';
+            tooltip.style.borderRadius = '4px';
+            tooltip.style.fontWeight = '500';
+            tooltip.style.fontSize = '14px';
+            tooltip.style.zIndex = '9999';
+            document.body.appendChild(tooltip);
+            setTimeout(() => {
+                tooltip.remove();
+            }, 2000);
+        });
 
         // Generate and display a UUID
         function generateUUID() {
@@ -220,7 +254,7 @@
         }
         document.getElementById('uuidDisplay').textContent = maintenanceUUID;
 
-        // Check if the page is still in maintenance mode every 15 seconds
+        // Check if the page is still in maintenance mode every 30 seconds
         const tryToCheck = () => {
             try {
                 checkMaintenancePage();
@@ -230,6 +264,7 @@
                     second: '2-digit'
                 });
                 document.getElementById('lastCheckTime').textContent = lastCheckTime;
+                document.getElementById('last-check').title = `Next check at ${new Date(Date.now() + recheckTime).toLocaleTimeString()}, Checking every ${recheckTime / 1000} seconds.`;
             } catch (error) {
                 //get the countdown time
                 var countdown = document.getElementById('countdown').textContent;
@@ -276,9 +311,11 @@
 
             // Stop the countdown when it reaches zero
             if (countdownTime < 0) {
-                clearInterval(countdownInterval);
                 // Optionally, you can reload the page or redirect to the updated website
-                redirectIn(3);
+                //redirectIn(3);
+
+                //restart the countdown
+                countdownTime = 299;
             }
         }, 1000);
 
