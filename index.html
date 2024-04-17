@@ -7,166 +7,165 @@
     <title>Website Updating</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
     <style>
-        * {
-            --primary-color: #ffc107;
-            --secondary-color: #333;
-            --light-color: #f5f5f5;
-            --dark-color: #333;
-            --dark-light-color: #666;
-            --dark-super-light-color: #999;
-            --danger-color: #ffb109;
-            --success-color: #00b894;
-            --warning-color: #f39c12;
-            --info-color: #0984e3;
-            --link-color: #3498db;
-            --background-color: #fff;
-        }
+        :root {
+    --primary-color: #ffc107;
+    --secondary-color: #333;
+    --light-color: #f5f5f5;
+    --dark-color: #333;
+    --dark-light-color: #666;
+    --dark-super-light-color: #999;
+    --danger-color: #ffb109;
+    --success-color: #00b894;
+    --warning-color: #f39c12;
+    --info-color: #0984e3;
+    --link-color: #3498db;
+    --background-color: #fff;
+}
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--light-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+.body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--light-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
 
-        .container {
-            background-color: var(--background-color);
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 24px;
-            text-align: center;
-            max-width: 600px;
-        }
+.container {
+    background-color: var(--background-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    text-align: center;
+    max-width: 600px;
+}
 
-        h1 {
-            font-weight: 500;
-            font-size: 24px;
-            color: var(--dark-color);
-            margin-bottom: 16px;
-        }
+.container__title {
+    font-weight: 500;
+    font-size: 24px;
+    color: var(--dark-color);
+    margin-bottom: 16px;
+}
 
-        p {
-            font-size: 16px;
-            color: var(--dark-light-color);
-            margin-bottom: 24px;
-        }
+.container__text {
+    font-size: 16px;
+    color: var(--dark-light-color);
+    margin-bottom: 24px;
+}
 
-        .progress-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 24px;
-        }
+.progress {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 24px;
+}
 
-        .progress-bar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 4px solid var(--primary-color);
-            border-top-color: transparent;
-            animation: spin 1s infinite linear;
-        }
+.progress__bar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 4px solid var(--primary-color);
+    border-top-color: transparent;
+    animation: spin 1s infinite linear;
+}
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
 
-            100% {
-                transform: rotate(360deg);
-            }
-        }
+.countdown {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dark-color);
+}
 
-        .countdown {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--dark-color);
-        }
+.button-container {
+    margin-top: 24px;
+}
 
-        .button-container {
-            margin-top: 24px;
-        }
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--primary-color);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
 
-        .contact-button {
-            display: inline-block;
-            padding: 12px 24px;
-            background-color: var(--primary-color);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-        }
+.button:hover {
+    background-color: var(--danger-color);
+}
 
-        .contact-button:hover {
-            background-color: var(--danger-color);
-        }
+.maintenance-id {
+    font-size: 14px;
+    color: var(--dark-super-light-color);
+    margin-top: 12px;
+}
 
-        .maintenance-id {
-            font-size: 14px;
-            color: var(--dark-super-light-color);
-            margin-top: 12px;
-        }
+.maintenance-id__text {
+    color: var(--primary-color);
+    font-weight: 500;
+}
 
-        .maintenance-id span {
-            color: var(--primary-color);
-            font-weight: 500;
-        }
+.maintenance-id__text:hover {
+    cursor: pointer;
+    color: var(--primary-color);
+    text-decoration: underline;
+}
 
-        .maintenance-id a {
-            color: var(--dark-super-light-color);
-            font-weight: 500;
-            text-decoration: none;
-        }
+.maintenance-id__link {
+    color: var(--dark-super-light-color);
+    font-weight: 500;
+    text-decoration: none;
+}
 
-        .maintenance-id a:hover {
-            cursor: pointer;
-            color: var(--primary-color);
-            text-decoration: underline;
-        }
+.maintenance-id__link:hover {
+    cursor: pointer;
+    color: var(--primary-color);
+    text-decoration: underline;
+}
 
-        .maintenance-id span:hover {
-            cursor: pointer;
-            color: var(--primary-color);
-            text-decoration: underline;
-        }
-
-        .last-check {
-            font-size: 10px;
-            color: var(--dark-super-light-color);
-            margin-top: 8px;
-        }
+.last-check {
+    font-size: 10px;
+    color: var(--dark-super-light-color);
+    margin-top: 8px;
+}
     </style>
 </head>
 
-<body>
+<body class="body">
     <div class="container">
-        <h1>Website Updating</h1>
-        <p>We're currently updating our website <a href="#" id="hostname"></a>.
+        <h1 class="container__title">Website Updating</h1>
+        <p class="container__text">We're currently updating our website <a href="#" id="hostname"></a>.
             <br>Please wait a few minutes while we update to the latest version.
             <br>Sorry for the inconvenience, please check back later.
         </p>
-        <div class="progress-container">
-            <div class="progress-bar"></div>
+        <div class="progress">
+            <div class="progress__bar"></div>
         </div>
         <div>
-            <p>We'll be back in:</p>
+            <p class="container__text">We'll be back in:</p>
             <p class="countdown" id="countdown"></p>
         </div>
         <div class="button-container">
-            <a href="mailto:admin@website.com" class="contact-button">Contact Us</a>
+            <a href="mailto:admin@website.com" class="button">Contact Us</a>
         </div><br>
         <div>
-            <p class="maintenance-id">Maintenance ID: <span id="uuidDisplay"></span></p>
+            <p class="maintenance-id">Maintenance ID: <span class="maintenance-id__text" id="uuidDisplay"></span></p>
         </div>
         <div>
-            <p id="last-check">Last checked: <span id="lastCheckTime"></span></p>
+            <p class="last-check">Last checked: <span id="lastCheckTime"></span></p>
         </div>
         <div>
-            <p class="maintenance-id">&copy; 2024 <a href="#" target="_blank">JLR Lab</a>. All rights reserved.</p>
+            <p class="maintenance-id">&copy; 2024 <a href="#" target="_blank" class="maintenance-id__link">JLR Lab</a>. All rights reserved.</p>
         </div>
     </div>
 
