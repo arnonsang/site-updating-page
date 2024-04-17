@@ -224,7 +224,6 @@
     </div>
 
     <script>
-      // Function to check if the current page content matches the maintenance page content
       let maintenanceUUID;
       const recheckTime = 30000; // 30 seconds
 
@@ -294,9 +293,8 @@
       var hostname = window.location.hostname;
       document.getElementById("hostname").textContent = hostname;
       document.getElementById("hostname").href = window.location.href;
-      document.querySelector(".contact-button").href =
-        "mailto:admin@" + hostname;
-      document.querySelector(".contact-button").title = "admin@" + hostname;
+      document.querySelector(".button").href = "mailto:admin@" + hostname;
+      document.querySelector(".button").title = "admin@" + hostname;
       document.getElementById("uuidDisplay").textContent = maintenanceUUID;
       document.getElementById("uuidDisplay").title =
         "Click to copy the Maintenance ID for support reference.";
@@ -329,6 +327,7 @@
           // Show a tooltip message
           const tooltip = document.createElement("div");
           tooltip.textContent = "Copied!";
+          tooltip.className = "tooltip"; // Add the class name
           tooltip.style.position = "absolute";
           tooltip.style.top = "50%";
           tooltip.style.left = "50%";
@@ -435,9 +434,8 @@
           .padStart(2, "0")}`;
         document.getElementById("countdown").textContent = countdownDisplay;
 
-        //Update the title of the page with the countdown and the website name
-        const hostname = window.location.hostname;
-        document.title = `${countdownDisplay} - Website Updating - ${hostname}`;
+        //Update the title of the page with the countdown and the hostname
+        document.title = `${countdownDisplay} - ${hostname} Updating - JLR Lab`;
 
         // Decrement the countdown time
         countdownTime--;
